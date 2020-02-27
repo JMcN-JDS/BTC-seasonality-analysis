@@ -1,0 +1,5 @@
+***without outliers
+ggplot(month, aes(x=Month, y=PriceChange, fill=Month)) + geom_boxplot(outlier.shape = NA, alpha=0.3) + theme(legend.position="none") + scale_y_continuous(limits = c(-30, 75)) + ylab("% Price Change") + ggtitle("Monthly Returns for Bitcoin, Oct 2010:Jan2020 - outliers excluded")
+
+***with outliers
+ggplot(month, aes(x=Month, y=PriceChange, fill=Month)) + geom_violin() + ylab("% Price Change") + stat_summary(fun.y=mean, geom="point", shape=23, size=2, colour="blue") + ggtitle("Monthly Bitcoin Returns Aug 2010-Jan 2020")
