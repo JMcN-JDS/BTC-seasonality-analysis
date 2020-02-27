@@ -1,3 +1,9 @@
+***install required packages
+
+install.packages("ggplot2")
+install.packages("plyr")
+install.packages("plotly")
+
 library(readr)
 heatmap_price <- read_csv("~/Desktop/heatmap price.csv", 
 +     col_types = cols(ROI = col_number(), 
