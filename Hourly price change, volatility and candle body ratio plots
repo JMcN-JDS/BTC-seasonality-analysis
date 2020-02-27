@@ -1,0 +1,60 @@
+library(readr)
+
+Bitstamp1h1 <- read_csv("~/Desktop/Bitstamp1h1.csv", 
++     col_types = cols(CandleBodyRatio = col_number(), 
++         Change = col_number(), Close = col_skip(), 
++         Date = col_date(format = "%d/%m/%Y"), 
++         High = col_skip(), Hour = col_time(format = "%H:%M"), 
++         Low = col_skip(), Month = col_factor(levels = c("January", 
++             "February", "March", "April", 
++             "May", "June", "July", "August", 
++             "September", "October", "November", 
++             "December")), Open = col_skip(), 
++         Symbol = col_skip(), Volatility = col_number(), 
++         `Volume BTC` = col_skip(), `Volume USD` = col_skip(), 
++         Weekday = col_factor(levels = c("Sunday", 
++             "Monday", "Tuesday", "Wednesday", 
++             "Thursday", "Friday", "Saturday")), 
++         Year = col_number()))
+
+View(Bitstamp1h1)
+
+
+***Hourly Price Changes, Bitstamp
+
+library(ggplot2)
+library(ggthemes)
+ggplot(bitstamp1h, aes(x=Hour, y=Day, fill = Change)) + 
+  geom_tile(color = "white", size = 0.1) + 
+  scale_x_discrete(expand=c(0,0)) + 
+  scale_y_discrete(expand=c(0,0)) + 
+  scale_fill_viridis_c(name="Price Change", option = "plasma") + 
+  coord_equal() +  
+  theme_tufte(base_family="Helvetica") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+***Hourly Volatility Changes, Bitstamp
+
+library(ggplot2)
+library(ggthemes)
+ggplot(bitstamp1h, aes(x=Hour, y=Day, fill = Volatility)) + 
+  geom_tile(color = "white", size = 0.1) + 
+  scale_x_discrete(expand=c(0,0)) + 
+  scale_y_discrete(expand=c(0,0)) + 
+  scale_fill_viridis_c(name=“Volatility”, option = "plasma") + 
+  coord_equal() +  
+  theme_tufte(base_family="Helvetica") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+***Hourly Candle Body Ratio, Bitstamp
+
+library(ggplot2)
+library(ggthemes)
+ggplot(bitstamp1h, aes(x=Hour, y=Day, fill = Candle_Body_Ratio)) + 
+  geom_tile(color = "white", size = 0.1) + 
+  scale_x_discrete(expand=c(0,0)) + 
+  scale_y_discrete(expand=c(0,0)) + 
+  scale_fill_viridis_c(name=“Candle Body Ratio”, option = "plasma") + 
+  coord_equal() +  
+  theme_tufte(base_family="Helvetica") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
