@@ -7,7 +7,7 @@ heatmap_price <- read_csv("~/Desktop/Vty_heatmap_2.csv",
 
 View(heatmap_price)
 
-***plot volatility heatmap (2016-2020)
+***plot volatility heatmap (2015-2020)
 
 library(ggplot2)
 source("https://raw.githubusercontent.com/iascchen/VisHealth/master/R/calendarHeat.R")
