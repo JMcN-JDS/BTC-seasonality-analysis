@@ -1,5 +1,11 @@
 *** BitMEX data is from Cryptodatum.io
 
+***install required packages
+
+install.packages("ggplot2")
+install.packages("ggthemes")
+
+***import data
 
 library(readr)
 
@@ -16,7 +22,7 @@ bitmex1h <- read_csv("~/Desktop/bitmex1h.csv",
 
 View(bitmex1h)
 
-***Hourly Price Change, BitMEX
+***Plot Hourly Price Change, BitMEX
 
 library(ggplot2)
 library(ggthemes)
@@ -30,7 +36,7 @@ ggplot(bitmex1h, aes(x=Hour, y=Day, fill = Change)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 
 
-***Hourly Volatility, BitMEX
+***Plot Hourly Volatility, BitMEX
 
 library(ggplot2)
 library(ggthemes)
@@ -44,7 +50,7 @@ ggplot(bitmex1h, aes(x=Time, y=Weekday, fill = Volatility)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 
 
-***Hourly Candle Body Ratio, BitMEX
+***Plot Hourly Candle Body Ratio, BitMEX
 
 library(ggplot2)
 library(ggthemes)
@@ -57,7 +63,7 @@ ggplot(bitmex1h, aes(x=Time, y=Weekday, fill = Candle_Body_Ratio)) +
   theme_tufte(base_family="Helvetica") +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 
-
+***import data
 
 bitmex4h <- read_csv("~/Desktop/bitmex4h.csv", 
 +     col_types = cols(Candle_Body_Ratio = col_number(), 
@@ -70,7 +76,7 @@ bitmex4h <- read_csv("~/Desktop/bitmex4h.csv",
 +             "Monday", "Tuesday", "Wednesday", 
 +             "Thursday", "Friday", "Saturday"))))
 
-***4-hour price change
+***Plot 4-hour price change
 
 library(ggplot2)
 library(ggthemes)
@@ -84,7 +90,7 @@ ggplot(bitmex4h, aes(x=Time y=Weekday, fill = Change)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 
 
-***4hour volatility, BitMEX
+***Plot 4-hour volatility, BitMEX
 
 library(ggplot2)
 library(ggthemes)
@@ -97,7 +103,7 @@ ggplot(bitmex4h, aes(x=Time, y=Weekday, fill = Volatility)) +
   theme_tufte(base_family="Helvetica") +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 
-***4hour candle body ratio, BitMEX
+***Plot 4-hour candle body ratio, BitMEX
 
 library(ggplot2)
 library(ggthemes)
