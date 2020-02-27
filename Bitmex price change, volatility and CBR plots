@@ -1,4 +1,4 @@
-*** BitMEX data is from Cryptodatum.io
+*** BitMEX data is from Cryptodatum.io/TradingView - both paid for. 
 
 ***install required packages
 
@@ -65,16 +65,20 @@ ggplot(bitmex1h, aes(x=Time, y=Weekday, fill = Candle_Body_Ratio)) +
 
 ***import data
 
+library(readr)
+
 bitmex4h <- read_csv("~/Desktop/bitmex4h.csv", 
 +     col_types = cols(Candle_Body_Ratio = col_number(), 
 +         Change = col_number(), Close = col_skip(), 
 +         Date = col_date(format = "%d/%m/%Y"), 
-+         High = col_skip(), Low = col_skip(), 
-+         Open = col_skip(), Time = col_time(format = "%H:%M"), 
++         High = col_skip(), Hour = col_time(format = "%H:%M"), 
++         Low = col_skip(), Open = col_skip(), 
 +         Volatility = col_number(), Volume = col_skip(), 
 +         Weekday = col_factor(levels = c("Sunday", 
 +             "Monday", "Tuesday", "Wednesday", 
 +             "Thursday", "Friday", "Saturday"))))
+
+View(bitmex4h)
 
 ***Plot 4-hour price change
 
