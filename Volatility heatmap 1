@@ -1,0 +1,11 @@
+library(readr)
+heatmap_price <- read_csv("~/Desktop/Vty_heatmap_1.csv", 
++     col_types = cols(ROI = col_number(), 
++         date = col_date(format = "%d/%m/%Y")))
+View(heatmap_price)
+library(ggplot2)
+source("https://raw.githubusercontent.com/iascchen/VisHealth/master/R/calendarHeat.R")
+library(plyr)
+library(plotly)
+r2g <- c("#D61818", "#B5E384")
+calendarHeat(Vty_heatmap_1$date, Vty_heatmap_1$VtyRet30d, ncolors = 2, color = "r2g", varname="Bitcoin 30-day Volatility")
