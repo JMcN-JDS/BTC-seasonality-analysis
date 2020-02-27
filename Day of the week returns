@@ -6,4 +6,7 @@ weekday <- read_csv("Documents/weekday.csv",
 +             "Thursday", "Friday", "Saturday")), 
 +         X6 = col_skip(), X7 = col_skip(), 
 +         date = col_date(format = "%d/%m/%Y")))
+
+***Plot returns by day of the week
+
 ggplot(weekday, aes(x=Weekday, y=PriceChange, fill=Weekday)) + geom_violin() + ylab("% Price Change") + stat_summary(fun.y=mean, geom="point", shape=23, size=2, colour="blue") + ggtitle(" Daily Bitcoin Returns 18 Jul 2010-31 Jan 2020")
