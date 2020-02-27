@@ -1,8 +1,13 @@
+***import data
+
 library(readr)
 heatmap_price <- read_csv("~/Desktop/Vty_heatmap_1.csv", 
 +     col_types = cols(ROI = col_number(), 
 +         date = col_date(format = "%d/%m/%Y")))
 View(heatmap_price)
+
+***create heatmap
+
 library(ggplot2)
 source("https://raw.githubusercontent.com/iascchen/VisHealth/master/R/calendarHeat.R")
 library(plyr)
