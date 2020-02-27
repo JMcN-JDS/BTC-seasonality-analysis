@@ -1,3 +1,9 @@
+***install required packages
+
+install.packages("ggplot2")
+
+***import data
+
 weekday <- read_csv("Documents/weekday.csv", 
 +     col_types = cols(PriceChange = col_number(), 
 +         PriceUSD = col_number(), VtyDayRet30d = col_skip(), 
