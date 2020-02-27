@@ -1,3 +1,10 @@
+**install required packages
+
+install.packages("ggthemes")
+install.packages("ggplot2")
+
+***create infographics
+
 library(readr)
 
 Bitstamp1h1 <- read_csv("~/Desktop/Bitstamp1h1.csv", 
