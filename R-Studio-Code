@@ -1,0 +1,243 @@
+***Calendar Heatmaps for 30-day ROI and 30-day Volatility
+
+***install required packages
+
+install.packages("ggplot2")
+install.packages("plyr")
+install.packages("plotly")
+
+library(readr)
+heatmap_price <- read_csv("~/Desktop/heatmap price.csv", 
++     col_types = cols(ROI = col_number(), 
++         date = col_date(format = "%d/%m/%Y")))
+
+View(heatmap_price)
+
+library(ggplot2)
+source("https://raw.githubusercontent.com/iascchen/VisHealth/master/R/calendarHeat.R")
+library(plyr)
+library(plotly)
+
+r2g <- c("#D61818", "#B5E384")
+calendarHeat(heatmap_price$date, heatmap_price$ROI, ncolors = 2, color = "r2g", varname="Bitcoin 30-day ROI")
+
+
+--------------------------------------------------------------
+***Volatility Calendar Heatmap, use Vty_heatmap_1.csv data:
+
+***import data
+
+library(readr)
+heatmap_price <- read_csv("~/Desktop/Vty_heatmap_1.csv", 
++     col_types = cols(ROI = col_number(), 
++         date = col_date(format = "%d/%m/%Y")))
+
+View(heatmap_price)
+
+***create heatmap (2010-2014)
+
+library(ggplot2)
+source("https://raw.githubusercontent.com/iascchen/VisHealth/master/R/calendarHeat.R")
+library(plyr)
+library(plotly)
+r2g <- c("#D61818", "#B5E384")
+calendarHeat(Vty_heatmap_1$date, Vty_heatmap_1$VtyRet30d, ncolors = 2, color = "r2g", varname="Bitcoin 30-day Volatility")
+
+
+----------------------------------
+***Volatility Heatmap part 2, use Vty_heatmap_2.csv data:
+
+***import data
+
+library(readr)
+heatmap_price <- read_csv("~/Desktop/Vty_heatmap_2.csv", 
++     col_types = cols(ROI = col_number(), 
++         date = col_date(format = "%d/%m/%Y")))
+
+View(heatmap_price)
+
+***plot volatility heatmap (2015-2020)
+
+library(ggplot2)
+source("https://raw.githubusercontent.com/iascchen/VisHealth/master/R/calendarHeat.R")
+library(plyr)
+library(plotly)
+r2g <- c("#D61818", "#B5E384")
+calendarHeat(Vty_heatmap_2$date, Vty_heatmap_2$VtyRet30d, ncolors = 2, color = "r2g", varname="Bitcoin 30-day Volatility")
+
+
+---------------------------------
+***Monthly plots
+
+***install required packages
+
+install.packages("ggplot2")
+
+***import data
+
+library(readr)
+> month <- read_csv("Documents/month.csv", 
++     col_types = cols(Month = col_factor(levels = c("January", 
++         "February", "March", "April", "May", 
++         "June", "July", "August", "September", 
++         "October", "November", "December")), 
++         PriceChange = col_number(), Year = col_factor(levels = c("2010", 
++             "2011", "2012", "2013", "2014", 
++             "2015", "2016", "2017", "2018", 
++             "2019", "2020"))))
+
+***plot without outliers
+ggplot(month, aes(x=Month, y=PriceChange, fill=Month)) + geom_boxplot(outlier.shape = NA, alpha=0.3) + theme(legend.position="none") + scale_y_continuous(limits = c(-30, 75)) + ylab("% Price Change") + ggtitle("Monthly Returns for Bitcoin, Oct 2010:Jan2020 - outliers excluded")
+
+***plot with outliers
+ggplot(month, aes(x=Month, y=PriceChange, fill=Month)) + geom_violin() + ylab("% Price Change") + stat_summary(fun.y=mean, geom="point", shape=23, size=2, colour="blue") + ggtitle("Monthly Bitcoin Returns Aug 2010-Jan 2020")
+
+
+--------------------------------------
+Day-of-the-week plot
+
+***install required packages
+
+install.packages("ggplot2")
+
+***import data
+
+weekday <- read_csv("Documents/weekday.csv", 
++     col_types = cols(PriceChange = col_number(), 
++         PriceUSD = col_number(), VtyDayRet30d = col_skip(), 
++         Weekday = col_factor(levels = c("Sunday", 
++             "Monday", "Tuesday", "Wednesday", 
++             "Thursday", "Friday", "Saturday")), 
++         X6 = col_skip(), X7 = col_skip(), 
++         date = col_date(format = "%d/%m/%Y")))
+
+***Plot returns by day of the week
+
+ggplot(weekday, aes(x=Weekday, y=PriceChange, fill=Weekday)) + geom_violin() + ylab("% Price Change") + stat_summary(fun.y=mean, geom="point", shape=23, size=2, colour="blue") + ggtitle(" Daily Bitcoin Returns 18 Jul 2010-31 Jan 2020")
+
+
+------------------------------------------------------------------------------------------------------
+1-hour/4-hour heatmaps for Average Returns, Volatility and Candle Body Ratio
+
+*** BitMEX data is from Cryptodatum.io/TradingView - both require subscription or involve a cost. 
+
+***Install required packages in R Studio:
+
+install.packages("ggplot2")
+install.packages("ggthemes")
+
+
+***import the data into R Studio, bitmex1h is the name of the .csv file for the hourly price data for BTC-USD:
+
+library(readr)
+
+bitmex1h <- read_csv("~/Desktop/bitmex1h.csv", 
++     col_types = cols(Candle_Body_Ratio = col_number(), 
++         Change = col_number(), Close = col_skip(), 
++         Date = col_date(format = "%d/%m/%Y"), 
++         High = col_skip(), Low = col_skip(), 
++         Open = col_skip(), Time = col_time(format = "%H:%M"), 
++         Volatility = col_number(), Volume = col_skip(), 
++         Weekday = col_factor(levels = c("Sunday", 
++             "Monday", "Tuesday", "Wednesday", 
++             "Thursday", "Friday", "Saturday"))))
+
+View(bitmex1h)
+
+***Plot 1-hour Average Return Heatmap for BTC-USD:
+
+library(ggplot2)
+library(ggthemes)
+ggplot(bitmex1h, aes(x=Hour, y=Day, fill = Change)) + 
+  geom_tile(color = "white", size = 0.1, stat = 'summary_2d') + 
+  scale_x_discrete(expand=c(0,0)) + 
+  scale_y_discrete(expand=c(0,0)) + 
+  scale_fill_viridis_c(name=“Mean Price Change”, option = "plasma") + 
+  coord_equal() +  
+  theme_tufte(base_family="Helvetica") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+
+***Plot Avergae Hourly Volatility Heatmap:
+
+library(ggplot2)
+library(ggthemes)
+ggplot(bitmex1h, aes(x=Time, y=Weekday, fill = Volatility)) + 
+  geom_tile(color = "white", size = 0.1, stat = 'summary_2d') + 
+  scale_x_discrete(expand=c(0,0)) + 
+  scale_y_discrete(expand=c(0,0)) + 
+  scale_fill_viridis_c(name=“Average Price Volatility”, option = "plasma") + 
+  coord_equal() +  
+  theme_tufte(base_family="Helvetica") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+
+***Plot Average Hourly Candle Body Ratio Heatmap:
+
+library(ggplot2)
+library(ggthemes)
+ggplot(bitmex1h, aes(x=Time, y=Weekday, fill = Candle_Body_Ratio)) + 
+  geom_tile(color = "white", size = 0.1, stat = 'summary_2d') + 
+  scale_x_discrete(expand=c(0,0)) + 
+  scale_y_discrete(expand=c(0,0)) + 
+  scale_fill_viridis_c(name=“Average Candle Body Ratio”, option = "plasma") + 
+  coord_equal() +  
+  theme_tufte(base_family="Helvetica") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+***import 4-hour price data:
+
+library(readr)
+
+bitmex4h <- read_csv("~/Desktop/bitmex4h.csv", 
++     col_types = cols(Candle_Body_Ratio = col_number(), 
++         Change = col_number(), Close = col_skip(), 
++         Date = col_date(format = "%d/%m/%Y"), 
++         High = col_skip(), Hour = col_time(format = "%H:%M"), 
++         Low = col_skip(), Open = col_skip(), 
++         Volatility = col_number(), Volume = col_skip(), 
++         Weekday = col_factor(levels = c("Sunday", 
++             "Monday", "Tuesday", "Wednesday", 
++             "Thursday", "Friday", "Saturday"))))
+
+View(bitmex4h)
+
+***Plot Average 4-hour Return Heatmap:
+
+library(ggplot2)
+library(ggthemes)
+ggplot(bitmex4h, aes(x=Time y=Weekday, fill = Change)) + 
+  geom_tile(color = "white", size = 0.1, stat = 'summary_2d') + 
+  scale_x_discrete(expand=c(0,0)) + 
+  scale_y_discrete(expand=c(0,0)) + 
+  scale_fill_viridis_c(name=“Mean Price Change”, option = "plasma") + 
+  coord_equal() +  
+  theme_tufte(base_family="Helvetica") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+
+***Plot Average 4-hour volatility:
+
+library(ggplot2)
+library(ggthemes)
+ggplot(bitmex4h, aes(x=Time, y=Weekday, fill = Volatility)) + 
+  geom_tile(color = "white", size = 0.1, stat = 'summary_2d') + 
+  scale_x_discrete(expand=c(0,0)) + 
+  scale_y_discrete(expand=c(0,0)) + 
+  scale_fill_viridis_c(name=“Average Price Volatility”, option = "plasma") + 
+  coord_equal() +  
+  theme_tufte(base_family="Helvetica") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+***Plot Average 4-hour Candle Body Ratio:
+
+library(ggplot2)
+library(ggthemes)
+ggplot(bitmex4h, aes(x=Time, y=Weekday, fill = Candle_Body_Ratio)) + 
+  geom_tile(color = "white", size = 0.1, stat = 'summary_2d') + 
+  scale_x_discrete(expand=c(0,0)) + 
+  scale_y_discrete(expand=c(0,0)) + 
+  scale_fill_viridis_c(name=“Average Candle Body Ratio”, option = "plasma") + 
+  coord_equal() +  
+  theme_tufte(base_family="Helvetica") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
