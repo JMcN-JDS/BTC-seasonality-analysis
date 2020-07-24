@@ -1,11 +1,12 @@
-*** BitMEX data is from Cryptodatum.io/TradingView - both paid for. 
+*** BitMEX data is from Cryptodatum.io/TradingView - both require subscription or involve a cost. 
 
-***install required packages
+***Install required packages in R Studio:
 
 install.packages("ggplot2")
 install.packages("ggthemes")
 
-***import data
+
+***import the data into R Studio, bitmex1h is the name of the .csv file for the hourly price data for BTC-USD:
 
 library(readr)
 
@@ -22,48 +23,48 @@ bitmex1h <- read_csv("~/Desktop/bitmex1h.csv",
 
 View(bitmex1h)
 
-***Plot Hourly Price Change, BitMEX
+***Plot 1-hour Average Return Heatmap for BTC-USD:
 
 library(ggplot2)
 library(ggthemes)
 ggplot(bitmex1h, aes(x=Hour, y=Day, fill = Change)) + 
-  geom_tile(color = "white", size = 0.1) + 
+  geom_tile(color = "white", size = 0.1, stat = 'summary_2d') + 
   scale_x_discrete(expand=c(0,0)) + 
   scale_y_discrete(expand=c(0,0)) + 
-  scale_fill_viridis_c(name=“Price Change”, option = "plasma") + 
+  scale_fill_viridis_c(name=“Mean Price Change”, option = "plasma") + 
   coord_equal() +  
   theme_tufte(base_family="Helvetica") +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 
 
-***Plot Hourly Volatility, BitMEX
+***Plot Avergae Hourly Volatility Heatmap:
 
 library(ggplot2)
 library(ggthemes)
 ggplot(bitmex1h, aes(x=Time, y=Weekday, fill = Volatility)) + 
-  geom_tile(color = "white", size = 0.1) + 
+  geom_tile(color = "white", size = 0.1, stat = 'summary_2d') + 
   scale_x_discrete(expand=c(0,0)) + 
   scale_y_discrete(expand=c(0,0)) + 
-  scale_fill_viridis_c(name=“Volatility”, option = "plasma") + 
+  scale_fill_viridis_c(name=“Average Price Volatility”, option = "plasma") + 
   coord_equal() +  
   theme_tufte(base_family="Helvetica") +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 
 
-***Plot Hourly Candle Body Ratio, BitMEX
+***Plot Average Hourly Candle Body Ratio Heatmap:
 
 library(ggplot2)
 library(ggthemes)
 ggplot(bitmex1h, aes(x=Time, y=Weekday, fill = Candle_Body_Ratio)) + 
-  geom_tile(color = "white", size = 0.1) + 
+  geom_tile(color = "white", size = 0.1, stat = 'summary_2d') + 
   scale_x_discrete(expand=c(0,0)) + 
   scale_y_discrete(expand=c(0,0)) + 
-  scale_fill_viridis_c(name=“Candle Body Ratio”, option = "plasma") + 
+  scale_fill_viridis_c(name=“Average Candle Body Ratio”, option = "plasma") + 
   coord_equal() +  
   theme_tufte(base_family="Helvetica") +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 
-***import data
+***import 4-hour price data:
 
 library(readr)
 
@@ -80,42 +81,42 @@ bitmex4h <- read_csv("~/Desktop/bitmex4h.csv",
 
 View(bitmex4h)
 
-***Plot 4-hour price change
+***Plot Average 4-hour Return Heatmap:
 
 library(ggplot2)
 library(ggthemes)
 ggplot(bitmex4h, aes(x=Time y=Weekday, fill = Change)) + 
-  geom_tile(color = "white", size = 0.1) + 
+  geom_tile(color = "white", size = 0.1, stat = 'summary_2d') + 
   scale_x_discrete(expand=c(0,0)) + 
   scale_y_discrete(expand=c(0,0)) + 
-  scale_fill_viridis_c(name=“Price Change”, option = "plasma") + 
+  scale_fill_viridis_c(name=“Mean Price Change”, option = "plasma") + 
   coord_equal() +  
   theme_tufte(base_family="Helvetica") +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 
 
-***Plot 4-hour volatility, BitMEX
+***Plot Average 4-hour volatility:
 
 library(ggplot2)
 library(ggthemes)
 ggplot(bitmex4h, aes(x=Time, y=Weekday, fill = Volatility)) + 
-  geom_tile(color = "white", size = 0.1) + 
+  geom_tile(color = "white", size = 0.1, stat = 'summary_2d') + 
   scale_x_discrete(expand=c(0,0)) + 
   scale_y_discrete(expand=c(0,0)) + 
-  scale_fill_viridis_c(name=“Volatility”, option = "plasma") + 
+  scale_fill_viridis_c(name=“Average Price Volatility”, option = "plasma") + 
   coord_equal() +  
   theme_tufte(base_family="Helvetica") +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 
-***Plot 4-hour candle body ratio, BitMEX
+***Plot Average 4-hour Candle Body Ratio:
 
 library(ggplot2)
 library(ggthemes)
 ggplot(bitmex4h, aes(x=Time, y=Weekday, fill = Candle_Body_Ratio)) + 
-  geom_tile(color = "white", size = 0.1) + 
+  geom_tile(color = "white", size = 0.1, stat = 'summary_2d') + 
   scale_x_discrete(expand=c(0,0)) + 
   scale_y_discrete(expand=c(0,0)) + 
-  scale_fill_viridis_c(name=“Candle Body Ratio”, option = "plasma") + 
+  scale_fill_viridis_c(name=“Average Candle Body Ratio”, option = "plasma") + 
   coord_equal() +  
   theme_tufte(base_family="Helvetica") +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
